@@ -1,0 +1,31 @@
+inpt = "y"
+student_info = dict() #Öğrenci bilgilerini depolamak için
+
+
+converter = {"AA":4,"BA":3.5,"BB":3,"CB":2.5,"CC":2,"DC":1.5,"DD":1,"FD":0.5,"FF":0} #Notları puanlara donüştürme için
+
+while inpt.lower()!="n": #"N" girene kadar devam etmesi için
+   _id = input("Enter student id: ")
+   _course_no = input("Enter number of courses registered: ")
+   grade_info = dict() #courseları grade'in içine koymak için
+   for _ in range(int(_course_no)):
+      _neg = input("Enter course name, ECTS, grade: ")
+      grade_info[_neg.split()[0]] = (_neg.split()[1],_neg.split()[2]) #dict() içine kaydetme için
+   student_info[_id] = grade_info # student_info'yu dict'e saklamak
+   inpt = input("Do you want to continue Y/N? ") #Başka öğrenci bilgisi sorgusu
+
+honor_list = []
+total_grades = 0
+total_credits = 0
+for k1,v1 in student_info.items(): #dıştaki dict boyunca aramak için
+   for k2,v2 in v1.items():#içteki dict boyunca aramak için
+      total_credits+=float(v2[0])  #toplam krediyi bulma
+      total_grades+=(float(v2[0])*converter[v2[1]]) #Toplam notları bulmak için
+   gpa = total_grades/total_credits #gpa hesabı yapmak için
+   if gpa>=3: #onur öğrencisi kontrolu
+      honor_list.append(k1) #onur öğrencisini listeye eklemek için
+   print("\nStudent id:",k1,"  GPA:",round(gpa,2)) #öğrenci bilgilerini ekrana basmak için
+
+print("\nHonor students with GPA above 3.0")
+for x in honor_list:
+   print(x) #onur öğrencilerini ekrana bastırma
